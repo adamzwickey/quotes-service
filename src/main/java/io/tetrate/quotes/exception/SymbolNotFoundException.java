@@ -1,8 +1,8 @@
-package io.pivotal.quotes.exception;
+package io.tetrate.quotes.exception;
 
 /**
  * Exception representing that a quote symbol cannot be found.
- * @author David Ferreira Pinto
+ * @author Adam Zwickey
  *
  */
 public class SymbolNotFoundException extends Exception {

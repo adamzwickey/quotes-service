@@ -1,18 +1,13 @@
-package io.pivotal.quotes;
+package io.tetrate.quotes;
 
-
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.junit4.SpringRunner;
 
 /**
  * Tests for the Quotes Application.
- * @author David Ferreira Pinto
+ * @author Adam Zwickey
  *
  */
-@RunWith(SpringRunner.class)
 @SpringBootTest(classes = QuotesApplication.class)
 public class QuotesApplicationTest {
 	

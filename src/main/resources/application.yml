@@ -1,0 +1,30 @@
+spring:
+  application:
+     name: quotes-service
+  config:
+    import: 'optional:configserver:'
+  cloud:
+    discovery:
+      enabled: false
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: always
+      show-components: always
+quotes:
+  apiToken: Tpk_46a46739c478497facb1dba40efb8789 #Testing Token; change to prod...
+  env: sandbox # Set to cloud or sandbox
+  quoteUrl: "https://${quotes.env}.iexapis.com/stable/stock/{symbol}/quote?token=${quotes.apiToken}"
+  quotesUrl: "https://${quotes.env}.iexapis.com/stable/stock/market/batch?symbols={symbols}&types=quote&token=${quotes.apiToken}"
+  companiesUrl: "https://${quotes.env}.iexapis.com/stable/stock/{name}/company?token=${quotes.apiToken}"
+
+info:
+  build:
+    group: ${group}
+    name: ${name}
+    description: ${description}
+    version: ${version}

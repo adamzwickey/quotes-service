@@ -1,5 +1,6 @@
-package io.pivotal.quotes.domain;
+package io.tetrate.quotes.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
@@ -11,16 +12,14 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  *	"Exchange":"NASDAQ"
  * }
  * 
- * @author David Ferreira Pinto
+ * @author Adam Zwickey
  *
  */
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class CompanyInfo implements Comparable<CompanyInfo> {
 
-	@JsonProperty("Symbol")
 	private String symbol;
-	@JsonProperty("Name")
-	private String name;
-	@JsonProperty("Exchange")
+	private String companyName;
 	private String exchange;
 	
 	public String getSymbol() {
@@ -29,11 +28,11 @@ public class CompanyInfo implements Comparable<CompanyInfo> {
 	public void setSymbol(String symbol) {
 		this.symbol = symbol;
 	}
-	public String getName() {
-		return name;
+	public String getCompanyName() {
+		return companyName;
 	}
-	public void setName(String name) {
-		this.name = name;
+	public void setCompanyName(String companyName) {
+		this.companyName = companyName;
 	}
 	public String getExchange() {
 		return exchange;
@@ -45,7 +44,7 @@ public class CompanyInfo implements Comparable<CompanyInfo> {
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
 		builder.append("CompanyInfo [symbol=").append(symbol).append(", name=")
-				.append(name).append(", exchange=").append(exchange)
+				.append(companyName).append(", exchange=").append(exchange)
 				.append("]");
 		return builder.toString();
 	}
@@ -61,7 +60,7 @@ public class CompanyInfo implements Comparable<CompanyInfo> {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((exchange == null) ? 0 : exchange.hashCode());
-		result = prime * result + ((name == null) ? 0 : name.hashCode());
+		result = prime * result + ((companyName == null) ? 0 : companyName.hashCode());
 		result = prime * result + ((symbol == null) ? 0 : symbol.hashCode());
 		return result;
 	}
@@ -79,10 +78,10 @@ public class CompanyInfo implements Comparable<CompanyInfo> {
 				return false;
 		} else if (!exchange.equals(other.exchange))
 			return false;
-		if (name == null) {
-			if (other.name != null)
+		if (companyName == null) {
+			if (other.companyName != null)
 				return false;
-		} else if (!name.equals(other.name))
+		} else if (!companyName.equals(other.companyName))
 			return false;
 		if (symbol == null) {
 			if (other.symbol != null)
