@@ -68,7 +68,7 @@ public class QuoteV1Controller {
 		} else {
 			quotes.add(service.getQuote(splitQuery[0]));
 		}
-		logger.info(String.format("Retrieved symbols: [%s] with quotes {}", query, quotes));
+		logger.info("Retrieved symbols:{} with quotes {}", query, quotes);
 		return new ResponseEntity<List<Quote>>(quotes, getNoCacheHeaders(), HttpStatus.OK);
 	}
 
