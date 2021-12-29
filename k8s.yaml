@@ -42,7 +42,7 @@ spec:
         version: v1
     spec:
       containers:
-      - image: gcr.io/abz-perm/quotes:v2
+      - image: gcr.io/abz-perm/quotes:v1
         name: quotes-service
         imagePullPolicy: Always
         ports:
