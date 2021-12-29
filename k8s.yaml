@@ -51,3 +51,28 @@ spec:
             httpGet:
               path: /actuator/health
               port: 8080
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: quotes-cert
+  namespace: quotes
+spec:
+  secretName: quotes-cert
+  issuerRef:
+    name: letsencrypt-issuer
+    kind: ClusterIssuer
+  dnsNames:
+    - quotes.trader.cloud.zwickey.net
+---
+apiVersion: install.tetrate.io/v1alpha1
+kind: IngressGateway
+metadata:
+  name: tsb-gateway-quotes
+  namespace: quotes
+spec:
+  kubeSpec:
+    service:
+      type: LoadBalancer
+      annotations:
+        "external-dns.alpha.kubernetes.io/hostname": "quotes.trader.cloud.zwickey.net."
