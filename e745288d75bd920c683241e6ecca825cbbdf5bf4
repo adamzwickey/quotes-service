@@ -1,0 +1,1 @@
+{"jobID":"eeb1c24c-ada7-e350-a89e-71eb74c6f162","spec":{"type":"policy","cause":{"Message":"","User":"adam zwickey \u003cadam@tetrate.io\u003e"},"spec":{"quotes:deployment/quotes":{"add":{"automated":"true"},"remove":null}}},"result":null}
