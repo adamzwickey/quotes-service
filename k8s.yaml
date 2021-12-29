@@ -15,8 +15,8 @@ metadata:
     app: quotes
 spec:
   ports:
-    - port: 8080
-      name: http
+  - port: 8080
+    name: http
   selector:
     app: quotes
   type: ClusterIP
@@ -26,6 +26,8 @@ kind: Deployment
 metadata:
   name: quotes
   namespace: quotes
+  annotations:
+    fluxcd.io/automated: 'true'
 spec:
   replicas: 2
   selector:
