@@ -74,6 +74,7 @@ public class Quote {
  */
 	private String symbol;
 	private String companyName;
+  private String currency;
 	private BigDecimal latestPrice;
   private BigDecimal high;
   private BigDecimal low;
@@ -115,6 +116,14 @@ public class Quote {
   }
   public void setChange(BigDecimal change) {
     this.change = change;
+  }
+
+  
+    public String getCurrency() {
+    return currency;
+  }
+  public void setCurrency(String currency) {
+    this.currency = currency;
   }
     @Override
     public String toString() {
