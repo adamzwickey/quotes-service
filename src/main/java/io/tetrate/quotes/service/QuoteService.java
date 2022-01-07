@@ -7,8 +7,10 @@ import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.HttpClientErrorException;
 import org.springframework.web.client.RestTemplate;
 
+import io.github.resilience4j.circuitbreaker.annotation.CircuitBreaker;
 import io.tetrate.quotes.domain.CompanyInfo;
 import io.tetrate.quotes.domain.Quote;
 import io.tetrate.quotes.exception.SymbolNotFoundException;
@@ -50,7 +52,7 @@ public class QuoteService {
 	 * @return The quote object or null if not found.
 	 * @throws SymbolNotFoundException
 	 */
-	// @CircuitBreaker(name = "QUOTE", fallbackMethod = "getQuoteFallback")
+	@CircuitBreaker(name = "QUOTE", fallbackMethod = "getQuoteFallback")
 	public Quote getQuote(String symbol) throws SymbolNotFoundException {
 		log.debug("QuoteService.getQuote: retrieving quote for: {}", symbol);
 		ResponseEntity<Quote> response = restTemplate().getForEntity(_quoteUrl, Quote.class, Map.of("symbol", symbol));
@@ -64,12 +66,10 @@ public class QuoteService {
 	}
 
 	@SuppressWarnings("unused")
-	private Quote getQuoteFallback(String symbol) throws SymbolNotFoundException {
+	private Quote getQuoteFallback(String symbol, Exception ex) {
 		log.debug("QuoteService.getQuoteFallback: circuit opened for symbol: {}", symbol);
-		Quote quote = new Quote();
-		quote.setSymbol(symbol);
-		quote.setLatestPrice(new BigDecimal(0));
-		return quote;
+		log.debug("root exception: {}", ex);
+		return new Quote();
 	}
 
 	/**
@@ -84,7 +84,7 @@ public class QuoteService {
 	// 	    commandProperties = {
 	// 	      @HystrixProperty(name="execution.timeout.enabled", value="false")
 	// 	    })
-	// @CircuitBreaker(name = "COMPANY", fallbackMethod = "getCompanyInfoFallback")
+	@CircuitBreaker(name = "COMPANY", fallbackMethod = "getCompanyInfoFallback")
 	public CompanyInfo getCompanyInfo(String name) {
 		log.debug("QuoteService.getCompanyInfo: retrieving info for: {}", name);	
 		CompanyInfo company = restTemplate().getForObject(_companyUrl,CompanyInfo.class, Map.of("name", name));
@@ -94,9 +94,9 @@ public class QuoteService {
 
 	
 	@SuppressWarnings("unused")
-	private List<CompanyInfo> getCompanyInfoFallback(String symbol) {
+	private List<CompanyInfo> getCompanyInfoFallback(String symbol, Exception e) {
 		log.debug("QuoteService.getCompanyInfoFallback: circuit opened for symbol: {}", symbol);
-		List<CompanyInfo> companies = new ArrayList<>();
-		return companies;
+		log.debug("root exception: {}", e);
+		return Collections.emptyList();
 	}
 }
